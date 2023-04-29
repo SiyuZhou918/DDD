@@ -1,23 +1,19 @@
 from process import process_LRLONLY
 import pandas as pd
-
-# read the excel file into a dataframe
-df = pd.read_excel('data.xlsx')
-
-# extract the first column into a series
-first_column = df.iloc[:, 0]
-
-# convert the series into a list
-first_column_list = first_column.tolist()
-
-# print the first 5 values of the list
-print(first_column_list[:5])
+import tkinter as tk
+from tkinter import filedialog
+import os
 
 
-def input_data():
+def input_data(filaname):
+    df = pd.read_excel('data.xlsx')
+    second_column = df.iloc[:, 1]
+    second_column_list = first_column.tolist()
+    return second_column_list
 
 
-def DDD_pacemaker():
+def DDD_pacemaker(filename):
+    ECG_list = input_data(filename)
     actual_time = 0
     pstate = "LRLONLY"
     while True:
@@ -46,4 +42,9 @@ def DDD_pacemaker():
 
 
 if __name__ == '__main__':
+    root = tk.Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename()
+    filename = os.path.basename(file_path)
+    # 'data.xlsx'
     DDD_pacemaker()
