@@ -32,7 +32,7 @@ def process_LRLONLY(actual_time, ECG):
 
 
 def process_APACE(actual_time, ECG):
-    print("This is APACE state. Time is {}".format(actual_time))
+    print("This is APACE state. Time is {}. Pace atrium here.".format(actual_time))
     ECG, actual_time = APACE(actual_time)
     pstate = "AB"
     actual_time += 1
@@ -87,7 +87,7 @@ def process_AVIONLY(actual_time, ECG):
             actual_time += 1
             break
         if AVI_timer == timer_expired:
-            pstate = "VPace"
+            pstate = "VPACE"
             print("LRL timer expired. Time is {}".format(actual_time))
             actual_time += 1
             break
@@ -97,8 +97,8 @@ def process_AVIONLY(actual_time, ECG):
 
 
 def process_VPACE(actual_time, ECG):
-    print("This is VPACE state. Time is {}".format(actual_time))
-    ECG, actual_time = VPACE(actual_time)
+    print("This is VPACE state. Time is {}. Pace ventricular here.".format(actual_time))
+    ECG, actual_time = VPACE(actual_time, ECG)
     pstate = "VB"
     actual_time += 1
     return pstate, actual_time, ECG
