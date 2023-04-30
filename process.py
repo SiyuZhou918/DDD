@@ -4,37 +4,38 @@ from events import APACE
 from events import VPACE
 
 
-def process_LRLONLY(actual_time):
+def process_LRLONLY(actual_time, ECG):
     print("This is LRLONLY state. Time is {}".format(actual_time))
     timer_expired = 100
     LRL_timer = 0
     while True:
-        A_sensor = A_sensor_on(actual_time)
+        A_sensor = A_sensor_on(actual_time, ECG)
         if A_sensor == True:
             pstate = "AB"
-            actual_time += 1
             print("A sensed. There is a P wave. Time is {}".format(actual_time))
+            actual_time += 1
             break
-        V_sensor = V_sensor_on(actual_time)
+        V_sensor = V_sensor_on(actual_time, ECG)
         if V_sensor == True:
             pstate = "VB"
-            actual_time += 1
             print("V sensed. There is a QRS complex. Time is {}".format(actual_time))
+            actual_time += 1
             break
         if LRL_timer == timer_expired:
             pstate = "APace"
-            actual_time += 1
             print("LRL timer expired. Time is {}".format(actual_time))
+            actual_time += 1
             break
         LRL_timer += 1
         actual_time += 1
     return pstate, actual_time
 
 
-def process_APACE(actual_time):
+def process_APACE(actual_time, ECG):
     print("This is APACE state. Time is {}".format(actual_time))
     ECG, actual_time = APACE(actual_time)
     pstate = "AB"
+    actual_time += 1
     return pstate, actual_time, ECG
 
 
@@ -45,8 +46,8 @@ def process_AB(actual_time):
     while True:
         if AB_timer == timer_expired:
             pstate = "ARP"
-            actual_time += 1
             print("AB timer expired. Time is {}".format(actual_time))
+            actual_time += 1
             break
         AB_timer += 1
         actual_time += 1
@@ -60,45 +61,46 @@ def process_ARP(actual_time):
     while True:
         if ARP_timer == timer_expired:
             pstate = "AVIONLY"
-            actual_time += 1
             print("ARP timer expired. Time is {}".format(actual_time))
+            actual_time += 1
             break
-        AB_timer += 1
+        ARP_timer += 1
         actual_time += 1
     return pstate, actual_time
 
 
-def process_AVIONLY(actual_time):
+def process_AVIONLY(actual_time, ECG):
     print("This is AVIONLY state. Time is {}".format(actual_time))
     timer_expired = 2
     AVI_timer = 0
     while True:
-        A_sensor = A_sensor_on(actual_time)
+        A_sensor = A_sensor_on(actual_time, ECG)
         if A_sensor == True:
             pstate = "AB"
-            actual_time += 1
             print("A sensed. There is a P wave. Time is {}".format(actual_time))
+            actual_time += 1
             break
-        V_sensor = V_sensor_on(actual_time)
+        V_sensor = V_sensor_on(actual_time, ECG)
         if V_sensor == True:
             pstate = "VB"
-            actual_time += 1
             print("V sensed. There is a QRS complex. Time is {}".format(actual_time))
+            actual_time += 1
             break
         if AVI_timer == timer_expired:
             pstate = "VPace"
-            actual_time += 1
             print("LRL timer expired. Time is {}".format(actual_time))
+            actual_time += 1
             break
         AVI_timer += 1
         actual_time += 1
     return pstate, actual_time
 
 
-def process_VPACE(actual_time):
+def process_VPACE(actual_time, ECG):
     print("This is VPACE state. Time is {}".format(actual_time))
     ECG, actual_time = VPACE(actual_time)
     pstate = "VB"
+    actual_time += 1
     return pstate, actual_time, ECG
 
 
@@ -109,8 +111,8 @@ def process_VB(actual_time):
     while True:
         if VB_timer == timer_expired:
             pstate = "VRP"
-            actual_time += 1
             print("VB timer expired. Time is {}".format(actual_time))
+            actual_time += 1
             break
         VB_timer += 1
         actual_time += 1
@@ -124,8 +126,8 @@ def process_VRP(actual_time):
     while True:
         if VRP_timer == timer_expired:
             pstate = "LRLONLY"
-            actual_time += 1
             print("ARP timer expired. Time is {}".format(actual_time))
+            actual_time += 1
             break
         VRP_timer += 1
         actual_time += 1
