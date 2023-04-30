@@ -16,6 +16,8 @@ def input_data(filaname):
     df = pd.read_excel(filaname)
     second_column = df.iloc[:, 1]
     second_column_list = second_column.tolist()
+    second_column_list[0]=5
+    print(second_column_list)
     return second_column_list
 
 
@@ -25,33 +27,32 @@ def DDD_pacemaker(filename):
     pstate = "LRLONLY"
     while True:
         if pstate == "LRLONLY":
-            pstate, actual_time = process_LRLONLY(actual_time)
+            pstate, actual_time = process_LRLONLY(actual_time, ECG_list)
         elif pstate == "APACE":
-            pstate, actual_time = process_APACE(actual_time)
+            pstate, actual_time, ECG = process_APACE(actual_time, ECG_list)
         elif pstate == "AB":
             pstate, actual_time = process_AB(actual_time)
         elif pstate == "ARP":
             pstate, actual_time = process_ARP(actual_time)
         elif pstate == "AVIONLY":
-            pstate, actual_time = process_AVIONLY(actual_time)
+            pstate, actual_time = process_AVIONLY(actual_time, ECG_list)
         elif pstate == "VPACE":
-            pstate, actual_time = process_VPACE(actual_time)
+            pstate, actual_time, ECG = process_VPACE(actual_time, ECG_list)
         elif pstate == "VB":
             pstate, actual_time = process_VB(actual_time)
         elif pstate == "VRP":
-            pstate, actual_time = process_VRPE(actual_time)
+            pstate, actual_time = process_VRP(actual_time)
         else:
             print("Illegal state\n")
-        actual_time += 1
         if actual_time == 100:
             break
     print("End")
 
 
 if __name__ == '__main__':
-    root = tk.Tk()
-    root.withdraw()
-    file_path = filedialog.askopenfilename()
-    filename = os.path.basename(file_path)
-    # 'data.xlsx'
-    DDD_pacemaker()
+    # root = tk.Tk()
+    # root.withdraw()
+    # file_path = filedialog.askopenfilename()
+    # filename = os.path.basename(file_path)
+    filename = 'ecg_1.xlsx'
+    DDD_pacemaker(filename)
