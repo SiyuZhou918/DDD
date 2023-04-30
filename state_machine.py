@@ -1,4 +1,11 @@
 from process import process_LRLONLY
+from process import process_APACE
+from process import process_AB
+from process import process_ARP
+from process import process_AVIONLY
+from process import process_VPACE
+from process import process_VB
+from process import process_VRP
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
@@ -6,9 +13,9 @@ import os
 
 
 def input_data(filaname):
-    df = pd.read_excel('data.xlsx')
+    df = pd.read_excel(filaname)
     second_column = df.iloc[:, 1]
-    second_column_list = first_column.tolist()
+    second_column_list = second_column.tolist()
     return second_column_list
 
 
