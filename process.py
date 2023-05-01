@@ -73,7 +73,7 @@ def process_VRP(actual_time):
 
 def process_VAIONLY(actual_time, ECG):
     print("This is VAIONLY state. Time is {}".format(actual_time))
-    timer_expired = 41
+    timer_expired = 42
     AVI_timer = 0
     while True:
         A_sensor = A_sensor_on(actual_time, ECG)

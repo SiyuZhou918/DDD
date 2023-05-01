@@ -56,5 +56,5 @@ if __name__ == '__main__':
     # root.withdraw()
     # file_path = filedialog.askopenfilename()
     # filename = os.path.basename(file_path)
-    filename = 'ecg_2.xlsx'
+    filename = 'ecg_1.xlsx'
     DDD_pacemaker(filename)
